@@ -1,5 +1,4 @@
 /*
-
 	You have N steps to climb .
 	You can either take one step or two steps at a time .
 	You need to find the total number of ways you can reach N steps .
@@ -22,9 +21,17 @@
 
 */
 #include "stdafx.h"
-
+int find_ways(int n)
+{
+	if (n <= 1)
+		return n;
+	return find_ways(n - 1) + find_ways(n - 2);;
+}
 
 int get_steps(int s)
 {
-	return 0;
+
+	if (s <= 1)
+		return s;
+	return find_ways(s + 1);
 }

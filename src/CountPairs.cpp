@@ -39,6 +39,7 @@ int count_pairs(char *str, int len, int start, int end){
 int count_pairs_wrapper(char *str, int len){
 	printf("%s\n", str);
 	return count_pairs(str, len, 0, 2);
+
 }
 
 

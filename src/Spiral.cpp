@@ -64,6 +64,7 @@ int *spiral_final(int **input_array, int rows, int columns, int k, int index, in
 			index++;
 		}
 		return arr;
+
 	}
 	for (j = 0; j < columns - 1; j++){
 		int local_1 = input_array[k][k + j];

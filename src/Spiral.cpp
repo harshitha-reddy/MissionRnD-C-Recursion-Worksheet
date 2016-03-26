@@ -33,42 +33,61 @@ Note : Check the function Parameters ,Its a double pointer .
 
 #include "stdafx.h"
 #include<stdlib.h>
+void generate_array(int **input_array, int rows, int columns, int seq);
+int *spiral_final(int **input_array, int rows, int columns, int k, int index, int *arr);
 
 int *spiral(int rows, int columns, int **input_array)
 {
-	int *arr = (int *)malloc(4 * (sizeof(int)));
-	if ((input_array == NULL) || (rows < 0 && columns < 0))
-	return NULL;
-	int i, k = 0, l = 0;
-	while (k < rows && l < columns)
-	{
-		/* Print the first row from the remaining rows */
-		for (i = l; i < columns; ++i)
-		{
-			arr = &input_array[k][i];
+	//int *arr = (int *)malloc((rows*columns) * (sizeof(int)));
+	if ((input_array == NULL) || (rows <= 0 || columns <= 0))
+		return NULL;
+	int index = 0;
+	int *arr = (int *)malloc((rows*columns) * (sizeof(int)));
+	int *output_array = spiral_final(input_array, rows, columns, 0, index, arr);
+	return output_array;
+}
+int *spiral_final(int **input_array, int rows, int columns, int k, int index, int *arr){
+	int j, i;
+	int m = 0;
+	if (rows == 1){
+		for (j = 0; j < columns; j++){
+			int local_5 = input_array[k][k + j];
+			(*(arr + index)) = local_5;
+			index++;
 		}
-		k++;
-		for (i = k; i < rows; ++i)
-		{
-			arr = &input_array[i][columns - 1];
-		}
-		columns--;
-		if (k < rows)
-		{
-			for (i = columns - 1; i >= l; --i)
-			{
-				arr = &input_array[rows - 1][i];
-			}
-			rows--;
-		}
-		if (l < columns)
-		{
-			for (i = rows - 1; i >= k; --i)
-			{
-				arr = &input_array[i][l];
-			}
-			l++;
-		}
-	}
 		return arr;
+	}
+	if (columns == 1){
+		for (j = 0; j < rows; j++){
+			int local_6 = input_array[k + j][k];
+			(*(arr + index)) = local_6;
+			index++;
+		}
+		return arr;
+	}
+	for (j = 0; j < columns - 1; j++){
+		int local_1 = input_array[k][k + j];
+		(*(arr + index)) = local_1;
+
+		index++;
+	}
+	for (i = 0; i < rows - 1; i++){
+		int local_2 = input_array[k + i][k + columns - 1];
+		(*(arr + index)) = local_2;
+		index++;
+	}
+
+	for (j = 0; j < columns - 1; j++){
+		int local_3 = input_array[k + rows - 1][k + columns - 1 - j];
+		(*(arr + index)) = local_3;
+		index++;
+	}
+
+	for (i = 0; i < rows - 1; i++){
+		int local_4 = input_array[k + rows - 1 - i][k];
+		(*(arr + index)) = local_4;
+		index++;
+	}
+	spiral_final(input_array, rows - 2, columns - 2, k + 1, index, arr);
+	return arr;
 }

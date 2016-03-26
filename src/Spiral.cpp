@@ -36,5 +36,39 @@ Note : Check the function Parameters ,Its a double pointer .
 
 int *spiral(int rows, int columns, int **input_array)
 {
+	int *arr = (int *)malloc(4 * (sizeof(int)));
+	if ((input_array == NULL) || (rows < 0 && columns < 0))
 	return NULL;
+	int i, k = 0, l = 0;
+	while (k < rows && l < columns)
+	{
+		/* Print the first row from the remaining rows */
+		for (i = l; i < columns; ++i)
+		{
+			arr = &input_array[k][i];
+		}
+		k++;
+		for (i = k; i < rows; ++i)
+		{
+			arr = &input_array[i][columns - 1];
+		}
+		columns--;
+		if (k < rows)
+		{
+			for (i = columns - 1; i >= l; --i)
+			{
+				arr = &input_array[rows - 1][i];
+			}
+			rows--;
+		}
+		if (l < columns)
+		{
+			for (i = rows - 1; i >= k; --i)
+			{
+				arr = &input_array[i][l];
+			}
+			l++;
+		}
+	}
+		return arr;
 }

@@ -34,9 +34,33 @@ more parameters .
 */
 
 #include<stdlib.h>
-
+#include<stdbool.h>
+int isMaze(int *maze, int rows, int columns, int x1, int y1, int x2, int y2);
 
 int path_exists(int *maze, int rows, int columns, int x1, int y1, int x2, int y2)
 {
-	return 1;
+	if (isMaze(maze, rows, columns, x1, y1, x2, y2) == 1)
+	{
+		if (x1 == x2 && y1 == y2)
+		{
+			return 1;
+		}
+		if (path_exists(maze, rows, columns, x1, y1 + 1, x2, y2) == 1)
+			return 1;
+		if (path_exists(maze, rows, columns, x1 + 1, y1, x2, y2) == 1)
+			return 1;
+		if (path_exists(maze, rows, columns, x1, y1 - 1, x2, y2) == 1)
+			return -1;
+		if (path_exists(maze, rows, columns, x1 - 1, y1, x2, y2) == 1)
+			return -1;
+	}
+	return 0;
+}
+
+int isMaze(int *maze, int rows, int columns, int x1, int y1, int x2, int y2)
+{
+	if (rows >0 && columns >0 && x1 >= 0 && x1 < rows && y1 >= 0 && y1 < columns && x2 >= 0 &&
+		x2 < rows && y2 >= 0 && y2 < columns && (*((int *)maze + (x1*rows + y1)) == 1))
+		return 1;
+	return 0;
 }

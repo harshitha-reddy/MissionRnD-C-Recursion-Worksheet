@@ -43,6 +43,44 @@ P.S: The Above Problem is just a modified version of a popular BackTracking prob
 */
 
 #include "stdafx.h"
+#include<stdbool.h>
+int isSnipers(int *battlefield,int rows,int cols,int n);
+int isPathCorrect(int *battlefield,int col,int n);
 int solve_nsnipers(int *battlefield, int n){
+	if ((battlefield == NULL) || n < 0)
+		return NULL;
+	if (isPathCorrect(battlefield, 0,n) == 0)
+		return 0;
+
+
+	return 1;
+}
+int isPathCorrect(int *battlefield,int col, int n){
+	int i;
+	if ( col>= n)
+		return 1;
+	for (i = 0; i < n; i++)
+	{
+		if (isSnipers(battlefield, i, col,n)){
+			*((int *)battlefield + i*n + col) = 1;
+			if (isPathCorrect(battlefield, col + 1, n))
+				return 1;
+			*((int *)battlefield + i*n + col) = 0;
+		}
+	}
 	return 0;
+}
+int isSnipers(int *battlefield, int rows, int col,int n){
+	int i, j;
+	for (i = 0; i < col;i++)
+	if (*((int *)battlefield + rows*n + i))
+		return 0;
+	for (i = rows, j = col; i >= 0 && j >= 0;i--,j--)
+	if (*((int *)battlefield + i*n + j))
+		return 0;
+	for (i = rows, j = col; j >= 0 && i<n; i++, j--)
+	if (*((int *)battlefield + i*n + j))
+		return 0;
+	return 1;
+
 }
